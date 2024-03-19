@@ -10,6 +10,7 @@ router.post("/register", async (req, res) => {
     const { error } = registerValidation(req.body);
 
     if (error) {
+        console.log("Validation failed");
         return res.status(400).json({ error: error.details[0].message });
     }
     
@@ -18,6 +19,7 @@ router.post("/register", async (req, res) => {
     const emailExist = await User.findOne({ email: req.body.email });
 
     if (emailExist) {
+        console.log("Email exists");
         return res.status(400).json({ error: "Email already exists. "});
     }
 
@@ -25,6 +27,9 @@ router.post("/register", async (req, res) => {
     // has the password
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt);
+
+    //console.log("Salt: " + salt);
+    //console.log("Pass: " + password);
 
 
     // create a user object and save in the DB
@@ -76,8 +81,8 @@ router.post("/login", async (req, res) => {
         // payload
         {
             name: user.name,
-            id: user._id
-
+            id: user._id,
+            extra_data: "test"
         },
         // TOKEN_SECRET,
         process.env.TOKEN_SECRET,
