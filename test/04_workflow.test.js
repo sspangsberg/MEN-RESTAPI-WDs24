@@ -6,11 +6,8 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe('Product workflow tests', () => {
-
-
-
-    // POST Create functional test
-    it('should register + login a user, create product and verify 1 in DB', (done) => {
+    
+    it('should register + login a user, create product and VERIFY 1 in DB', (done) => {
 
         // 1) Register new user
         let user = {
@@ -84,9 +81,8 @@ describe('Product workflow tests', () => {
                     });
             });
     });
-
-    // Valid input test (register, login, )
-    it('should register + login a user, create product and delete it from DB', (done) => {
+    
+    it('should register + login a user, create product and DELETE it from DB', (done) => {
 
         // 1) Register new user
         let user = {
@@ -159,34 +155,5 @@ describe('Product workflow tests', () => {
                             });
                     });
             });
-    });
-    
-    
-
-    // Invalid input test
-    it('invalid user input test', (done) => {
-
-        // 1) Register new user with invalid inputs
-        let user = {
-            name: "Peter Petersen",
-            email: "mail@petersen.com",
-            password: "123456" //Faulty password - Joi/validation should catch this...
-        }
-        chai.request(server)
-            .post('/api/user/register')
-            .send(user)
-            .end((err, res) => {
-                                
-                // Asserts
-                expect(res.status).to.be.equal(200); //normal expect with no custom output message
-                //expect(res.status,"Status is not 400 (NOT FOUND)").to.be.equal(400); //custom output message at fail
-                
-                expect(res.body).to.be.a('object');
-                //expect(res.body.error.message).to.be.equal("\"password\" length must be at least 6 characters long");  
-                done();              
-            });
-    });
-    
-
-    
+    }); 
 });

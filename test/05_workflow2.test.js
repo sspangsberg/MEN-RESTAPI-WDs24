@@ -5,8 +5,27 @@ const server = require('../server');
 
 chai.use(chaiHttp);
 
-describe('Product workflow tests - 2', () => {
+describe('User workflow tests - 2', () => {
 
+    it('invalid user input test', (done) => {
 
-
+        // 1) Register new user with invalid inputs
+        let user = {
+            name: "Peter Petersen",
+            email: "mail@petersen.com",
+            password: "123" //Faulty password - Joi/validation should catch this...
+        }
+        chai.request(server)
+            .post('/api/user/register')
+            .send(user)
+            .end((err, res) => {
+                                
+                // Asserts
+                expect(res.status).to.be.equal(400);
+                expect(res.body).to.be.a('object');
+                expect(res.body.error).to.be.equal("\"password\" length must be at least 6 characters long");  
+                
+                done();              
+            });
+    });
 });

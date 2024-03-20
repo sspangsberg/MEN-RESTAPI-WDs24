@@ -32,7 +32,10 @@ router.post("/", verifyToken, (req, res) => {
 // Read all products - get
 router.get("/", (req, res) => {
     product.find()
-        .then(data => { res.send(data); })
+        .then(data => {
+            res.send(mapArray(data));  // array
+
+        })
         .catch(err => { res.status(500).send({ message: err.message }); })
 })
 
@@ -88,7 +91,9 @@ router.get("/instock", (req, res) => {
 router.get("/:id", (req, res) => {
 
     product.findById(req.params.id)
-        .then(data => { res.send(data); })
+        .then(data => {
+            res.send(mapData(data));
+        })
         .catch(err => { res.status(500).send({ message: err.message }); })
 })
 
@@ -125,6 +130,35 @@ router.delete("/:id", verifyToken, (req, res) => {
         })
         .catch(err => { res.status(500).send({ message: "Error delete product with id=" + id }); })
 })
+
+
+function mapArray(inputArray) {
+    let outputArray = inputArray.map(element => (
+        mapData(element)
+    ));
+
+    return outputArray;
+}
+
+
+function mapData(element) {
+    let outputObj = {
+        // do some validation here....
+
+        id: element._id,
+        name: element.name,
+        describe: element.description,
+        price: element.price,
+        inStock: element.inStock,
+
+        // add uri (HATEOAS) for this resource
+        uri: "/api/products/" + element._id
+    }
+
+    return outputObj;
+}
+
+
 
 
 

@@ -10,19 +10,16 @@ router.post("/register", async (req, res) => {
     const { error } = registerValidation(req.body);
 
     if (error) {
-        console.log("Validation failed");
         return res.status(400).json({ error: error.details[0].message });
     }
     
-        
+    
     // check if the email is already registered
     const emailExist = await User.findOne({ email: req.body.email });
 
     if (emailExist) {
-        console.log("Email exists");
         return res.status(400).json({ error: "Email already exists. "});
     }
-
 
     // has the password
     const salt = await bcrypt.genSalt(10);
@@ -30,7 +27,6 @@ router.post("/register", async (req, res) => {
 
     //console.log("Salt: " + salt);
     //console.log("Pass: " + password);
-
 
     // create a user object and save in the DB
     const userObject = new User( {

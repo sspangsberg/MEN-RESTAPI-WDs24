@@ -7,6 +7,7 @@ let productSchema = new Schema(
         description: {type:String},
         price: {type:Number},
         inStock: {type:Boolean}
+        
     }
 );
 

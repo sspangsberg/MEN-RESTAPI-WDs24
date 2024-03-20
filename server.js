@@ -6,8 +6,24 @@ const userRoutes = require("./routes/auth")
 const app = express()
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs')
+const cors = require("cors");
 
 require("dotenv-flow").config()
+
+// CORS npm package
+app.use(cors({
+    "origin": "*"
+}));
+
+/*
+
+app.use(function (req, res, next) {
+    res.header("Acces-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-Width, Content-Type, Accept");
+    next();
+});
+*/
+
 
 app.use(bodyParser.json())
 
