@@ -29,7 +29,4 @@ productSchema.pre('findByIdAndUpdate', function() {
     update.$inc.__v = 1;
   });
 
-
-
-
 module.exports = mongoose.model("product",productSchema);

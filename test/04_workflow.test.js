@@ -6,7 +6,7 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe('Product workflow tests', () => {
-    
+
     it('should register + login a user, create product and VERIFY 1 in DB', (done) => {
 
         // 1) Register new user
@@ -19,12 +19,12 @@ describe('Product workflow tests', () => {
             .post('/api/user/register')
             .send(user)
             .end((err, res) => {
-                
+
                 // Asserts
-                expect(res.status).to.be.equal(200);   
+                expect(res.status).to.be.equal(200);
                 expect(res.body).to.be.a('object');
                 expect(res.body.error).to.be.equal(null);
-               
+
                 // 2) Login the user
                 chai.request(server)
                     .post('/api/user/login')
@@ -35,7 +35,7 @@ describe('Product workflow tests', () => {
                     .end((err, res) => {
                         // Asserts                        
                         expect(res.status).to.be.equal(200);
-                        expect(res.body.error).to.be.equal(null);                        
+                        expect(res.body.error).to.be.equal(null);
                         let token = res.body.data.token;
 
                         // 3) Create new product
@@ -52,12 +52,12 @@ describe('Product workflow tests', () => {
                             .set({ "auth-token": token })
                             .send(product)
                             .end((err, res) => {
-                                
-                                // Asserts
-                                expect(res.status).to.be.equal(200);                                
+
+                                // Assertsx
+                                expect(res.status).to.be.equal(200);
                                 expect(res.body).to.be.a('array');
                                 expect(res.body.length).to.be.eql(1);
-                                
+
                                 let savedProduct = res.body[0];
                                 expect(savedProduct.name).to.be.equal(product.name);
                                 expect(savedProduct.description).to.be.equal(product.description);
@@ -69,19 +69,19 @@ describe('Product workflow tests', () => {
                                 chai.request(server)
                                     .get('/api/products/')
                                     .end((err, res) => {
-                                        
+
                                         // Asserts
-                                        expect(res.status).to.be.equal(200);                                
-                                        expect(res.body).to.be.a('array');                                
+                                        expect(res.status).to.be.equal(200);
+                                        expect(res.body).to.be.a('array');
                                         expect(res.body.length).to.be.eql(1);
-                                
+
                                         done();
                                     });
                             });
                     });
             });
     });
-    
+
     it('should register + login a user, create product and DELETE it from DB', (done) => {
 
         // 1) Register new user
@@ -94,12 +94,12 @@ describe('Product workflow tests', () => {
             .post('/api/user/register')
             .send(user)
             .end((err, res) => {
-                
+
                 // Asserts
-                expect(res.status).to.be.equal(200);   
+                expect(res.status).to.be.equal(200);
                 expect(res.body).to.be.a('object');
                 expect(res.body.error).to.be.equal(null);
-                
+
                 // 2) Login the user
                 chai.request(server)
                     .post('/api/user/login')
@@ -109,8 +109,8 @@ describe('Product workflow tests', () => {
                     })
                     .end((err, res) => {
                         // Asserts                        
-                        expect(res.status).to.be.equal(200);                         
-                        expect(res.body.error).to.be.equal(null);                        
+                        expect(res.status).to.be.equal(200);
+                        expect(res.body.error).to.be.equal(null);
                         let token = res.body.data.token;
 
                         // 3) Create new product
@@ -127,12 +127,12 @@ describe('Product workflow tests', () => {
                             .set({ "auth-token": token })
                             .send(product)
                             .end((err, res) => {
-                                
+
                                 // Asserts
-                                expect(res.status).to.be.equal(200);                                
+                                expect(res.status).to.be.equal(200);
                                 expect(res.body).to.be.a('array');
                                 expect(res.body.length).to.be.eql(1);
-                                
+
                                 let savedProduct = res.body[0];
                                 expect(savedProduct.name).to.be.equal(product.name);
                                 expect(savedProduct.description).to.be.equal(product.description);
@@ -144,16 +144,16 @@ describe('Product workflow tests', () => {
                                     .delete('/api/products/' + savedProduct._id)
                                     .set({ "auth-token": token })
                                     .end((err, res) => {
-                                        
+
                                         // Asserts
-                                        expect(res.status).to.be.equal(200);                                        
+                                        expect(res.status).to.be.equal(200);
                                         const actualVal = res.body.message;
-                                        expect(actualVal).to.be.equal('Product was succesfully deleted.');        
+                                        expect(actualVal).to.be.equal('Product was succesfully deleted.');
                                         done();
                                     });
-                                    
+
                             });
                     });
             });
-    }); 
+    });
 });
