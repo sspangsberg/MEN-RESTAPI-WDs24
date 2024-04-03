@@ -11,8 +11,8 @@ describe('User workflow tests - 2', () => {
 
         // 1) Register new user with invalid inputs
         let user = {
-            name: "Peter Petersen",
-            email: "mail@petersen.com",
+            name: "Lars Larsen",
+            email: "mail@larsen.com",
             password: "123" //Faulty password - Joi/validation should catch this...
         }
         chai.request(server)
