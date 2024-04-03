@@ -4,26 +4,24 @@ on:
   push:
     branches: [main]
 
-
 jobs:
-
   test:
     name: Test
     runs-on: ubuntu-latest
 
-    strategy: 
+    strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]
 
     steps:
-      - name: Checkout 
-        uses: actions/checkout@v3 # was "v2" before 
-        with: 
+      - name: Checkout
+        uses: actions/checkout@v3 # was "v2" before
+        with:
           fetch-depth: 0
 
       - name: Use Node.JS ${{ matrix.node-version }}
         uses: actions/setup-node@v3 # was "v2" before
-        with: 
+        with:
           node-version: ${{ matrix.node-version }}
 
       - name: NPM install, build and test
@@ -31,11 +29,10 @@ jobs:
           npm install
           npm run 
           npm test
-        env: 
+        env:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
-
 
   # Heavily modified deploy job to fit render.com
   deploy:
@@ -43,7 +40,7 @@ jobs:
     needs: [test] # Our tests must pass in order to run the deploy job
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
