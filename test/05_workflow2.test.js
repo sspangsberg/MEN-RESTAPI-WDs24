@@ -13,7 +13,7 @@ describe('User workflow tests - 2', () => {
         let user = {
             name: "Lars Larsen",
             email: "mail@larsen.com",
-            password: "123456" //Faulty password - Joi/validation should catch this...
+            password: "123" //Faulty password - Joi/validation should catch this...
         }
         chai.request(server)
             .post('/api/user/register')
