@@ -10,17 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      max-parallel: 1
       matrix:
         node-version: [18.x, 20.x]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3 # was "v2" before
+        uses: actions/checkout@v4 # was "v3" before
         with:
           fetch-depth: 0
 
       - name: Use Node.JS ${{ matrix.node-version }}
-        uses: actions/setup-node@v3 # was "v2" before
+        uses: actions/setup-node@v4 # was "v3" before
         with:
           node-version: ${{ matrix.node-version }}
 
