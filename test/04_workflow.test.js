@@ -36,7 +36,7 @@ describe('Product workflow tests', () => {
                         // Asserts                        
                         expect(res.status).to.be.equal(200);
                         expect(res.body.error).to.be.equal(null);
-                        let token = res.body.data.token;
+                        let token = res.body.data.accessToken;
                     
                         // 3) Create new product
                         let product =
@@ -111,7 +111,7 @@ describe('Product workflow tests', () => {
                         // Asserts                        
                         expect(res.status).to.be.equal(200);
                         expect(res.body.error).to.be.equal(null);
-                        let token = res.body.data.token;
+                        let token = res.body.data.accessToken;
 
                         // 3) Create new product
                         let product =

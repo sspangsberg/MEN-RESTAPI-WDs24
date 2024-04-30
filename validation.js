@@ -42,5 +42,17 @@ const verifyToken = (req, res, next) => {
     }
 }
 
+// 1
+// logic to verify whether a refresh token and its corresponding email is valid
+const verifyRefresh = (email, refreshToken) => {
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.TOKEN_SECRET);
+        return decoded.email === email;
+    } catch (error) {
+        return false;
+    }
+}
 
-module.exports = { registerValidation, loginValidation, verifyToken };
+
+
+module.exports = { registerValidation, loginValidation, verifyToken, verifyRefresh };
